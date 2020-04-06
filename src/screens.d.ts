@@ -15,18 +15,30 @@ declare module 'react-native-screens' {
   export function enableScreens(shouldEnableScreens?: boolean): void;
   export function screensEnabled(): boolean;
 
-  export type StackPresentationTypes = 'push' | 'modal' | 'transparentModal' | 'fullScreenModal' | 'formSheet';
+  export type StackPresentationTypes =
+    | 'push'
+    | 'modal'
+    | 'transparentModal'
+    | 'fullScreenModal'
+    | 'formSheet';
   export type StackAnimationTypes = 'default' | 'fade' | 'flip' | 'none';
 
   export interface ScreenProps extends ViewProps {
     active?: 0 | 1 | Animated.AnimatedInterpolation;
     onComponentRef?: (view: any) => void;
     children?: React.ReactNode;
+    /**
+     *@description A callback that gets called when the current screen appears.
+     */
     onAppear?: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
     /**
      *@description A callback that gets called when the current screen is dismissed by hardware back (on Android) or dismiss gesture (swipe back or down). The callback takes no arguments.
      */
     onDismissed?: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
+    /**
+     *@description A callback that gets called when the current screen finishes its transition.
+     */
+    onFinishTransitioning?: (e: NativeSyntheticEvent<NativeTouchEvent>) => void;
     /**
      * @type "push" – the new screen will be pushed onto a stack which on iOS means that the default animation will be slide from the side, the animation on Android may vary depending on the OS version and theme.
      * @type "modal" – the new screen will be presented modally. In addition this allow for a nested stack to be rendered inside such screens
@@ -80,7 +92,7 @@ declare module 'react-native-screens' {
      */
     titleColor?: string;
     /**
-     *@description Controlls the color of the navigation header.
+     *@description Controls the color of the navigation header.
      */
     backgroundColor?: string;
     /**
@@ -127,6 +139,19 @@ declare module 'react-native-screens' {
      */
     largeTitleFontSize?: number;
     /**
+     *@description Controls the color of the navigation header when the edge of any scrollable content reaches the matching edge of the navigation bar.
+     */
+    largeTitleBackgroundColor?: string;
+    /**
+     * @description Boolean that allows for disabling drop shadow under navigation header when the edge of any scrollable content reaches the matching edge of the navigation bar.
+     */
+    largeTitleHideShadow?: boolean;
+    /**
+     * @host (iOS only)
+     * @description Customize the color to be used for the large title. By default uses the titleColor property.
+     */
+    largeTitleColor?: string;
+    /**
      * Pass HeaderLeft, HeaderRight and HeaderTitle
      */
     children?: React.ReactNode;
@@ -140,6 +165,7 @@ declare module 'react-native-screens' {
   export const ScreenStackHeaderBackButtonImage: ComponentClass<ImageProps>;
   export const ScreenStackHeaderLeftView: ComponentClass<ViewProps>;
   export const ScreenStackHeaderRightView: ComponentClass<ViewProps>;
+  export const ScreenStackHeaderCenterView: ComponentClass<ViewProps>;
   export const ScreenStackHeaderConfig: ComponentClass<
     ScreenStackHeaderConfigProps
   >;
